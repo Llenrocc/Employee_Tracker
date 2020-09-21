@@ -347,3 +347,42 @@ function addRole() {
 }
 
 // Add a department
+function addDept() {
+
+    inquirer.prompt({
+        // prompt user for name of department
+        name: "deptName",
+        type: "input",
+        message: "Department Name: "
+    }).then((answer) => {
+
+        // add department to table
+        connection.query(`INSERT INTO department (name)VALUES ("${answer.deptName}");`, (err, res) => {
+            if(err) return err;
+            console.log("\n DEPARTMENT ADDED...\n ");
+            mainMenu();
+        });
+    });
+}
+
+// update employee role
+function updateEmpRole(){
+
+    // role & employee array
+    let employeeArr = [];
+    let roleArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+        return Promise.all([
+
+            conn.query('SELECT id, title FROM role ORDER BY title ASC'),
+            conn.query("SELECT employee.id, concat(employee.first_name, ' ', employee.last_name) AS Employee FROM employee ORDER BY Employee ASC")
+        ]);
+    }).then(([roles, employees]) => {
+
+        for (i=0, i < roles.length; i++) {
+            roleArr.push(roles[i].title)
+        }
+    })
+}
