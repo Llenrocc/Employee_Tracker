@@ -381,8 +381,31 @@ function updateEmpRole(){
         ]);
     }).then(([roles, employees]) => {
 
-        for (i=0, i < roles.length; i++) {
+        for (i=0; i < roles.length; i++) {
             roleArr.push(roles[i].title)
+        }
+
+        // place employees in an array
+        for (i=0; i < employees.length; i++) {
+            employeeArr.push(employees[i].Employee);
+        }
+    })
+}
+
+
+// update the employee manager 
+function updateEmpMngr() {
+
+    let employeeArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+
+        return conn.query("SELECT employee.id, concat(employee.first_name, ' ', employee.last_name) AS Employee FROM employee ORDER BY Employee ASC");
+    }).then((employees) => {
+
+        for (i=0; i < employees.length; i++) {
+            
         }
     })
 }
