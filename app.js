@@ -444,7 +444,119 @@ function updateEmpMngr() {
                     console.log(`\n ${answer.employee} MANAGER UPDATED TO ${answer.manager}...\n`);
 
                     mainMenu();
-                })
-            })
-    })
+                });
+            });
+    });
+}
+
+function viewAllEmpByMngr() {
+
+    let managerArr = [];
+
+    promisemysql.createConnection(connectionProperties)
+    .then((conn) => {
+
+        return conn.query("SELECT DISTINCT m.id, CONCAT(m.first_name, ' ', m.last_name) AS manager FROM employee e Inner JOIN employee m ON e.manager_id = m.id");
+    }).then(function(managers) {
+
+        for (i=0; i < managers.length; i++) {
+            managerArr.push(managers[i].manager);
+        }
+
+        return managers;
+    }).then((managers) => {
+
+        inquirer.prompt({
+
+            name: "manager",
+            type: "list",
+            message: "Which manager would you like to choose",
+            choices: managerArr
+        }).then((answer) => {
+
+            let managerID;
+
+            for (i=0; i < managers.length; i++) {
+                if (answer.manager == managers[i].manager) {
+                    managerID = managers[i].id;
+                }
+            }
+
+            const query = `SELECT e.id, e.first_name, e.last_name, role.title, department.name AS department, role.salary, concat(m.first_name, ' ', m.last_name) AS MANAGER
+            FROM employee e
+            LEFT JOIN employee m ON e.manager_id = m.id
+            INNER JOIN role on e.role_id = role.id
+            INNER JOIN department ON role.department_id = department.id
+            WHERE e.manager_id = ${managerID};`;
+
+            connection.query(query, (err, res) => {
+                if (err) return err;
+                console.log("\n");
+                console.table(res);
+
+                mainMenu();
+            });
+        });
+    });
+}
+
+// Delete an employee
+
+function deleteEmp() {
+
+    let employeeArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+
+        return conn.query("SELECT employee.id, concat(employee.first_name, ' ', employee.last_name) AS employee FROM employee ORDER BY Employee ASC");
+    }).then((employees) => {
+
+        // place all employees in an array
+        for (i=0; i < employees.length; i++) {
+            employeeArr.push(employees[i].employee);
+        }
+
+        inquirer.prompt ([
+            {
+                name: "employee",
+                type: "list",
+                message: "Who do you want to delete?",
+                choices: employeeArr
+            }, {
+                name: "yesNo",
+                type: "list",
+                message: "Confirm deletion",
+                choices: ["NO", "YES"]    
+            }]).then((answer) => {
+
+                if (answer.yesNO == "YES") {
+                    let employeeID;
+
+                    for (i=0; i < employees.length; i++) {
+                        if (answer.employee == employees[i].employee) {
+                            employeeID = employees[i].id;
+                        }
+                    }
+
+                // delete the employee that is selected
+                connection.query(`DELETE FROM employee WHERE id=${employeeID};`, (err, res) => {
+                    if(err) return err;
+                    console.log(`\n EMPLOYEE '${answer.employee}' DELETED...\n `);
+                    
+                    mainMenu();
+                });    
+            }
+            else {
+
+                console.log(`\n EMPLOYEE '${answer.employee}' NOT DELETED...\n `);
+
+                mainMenu();
+            }
+        });
+    });
+}
+
+function deleteRole() {
+    
 }
