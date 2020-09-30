@@ -389,7 +389,48 @@ function updateEmpRole(){
         for (i=0; i < employees.length; i++) {
             employeeArr.push(employees[i].Employee);
         }
-    })
+        return Promise.all([roles, employees]);
+    }).then(([roles, employees]) => {
+
+        inquirer.prompt([
+            {
+                name: "employee",
+                type: "list",
+                message: "Which employee would you like to edit?",
+                choices: employeeArr
+            }, {
+                name: "role",
+                type: "list",
+                message: "What is their new role?",
+                choices: roleArr
+            },]).then((answer) => {
+
+                let roleID;
+                let employeeID;
+
+                for (i=0; i < roles.length; i++) {
+                    if (answer.role == roles[i].title) {
+                        roleID = roles[i].id
+                    }
+                }
+
+                //get ID of employee selected
+                for (i=0; i < employees.length; i++) {
+                    if (answer.employee == employees[i].Employee) {
+                        employeeID = employees[i].id;
+                    }
+                }
+
+                // update the employee with a new role
+                connection.query(`UPDATE employee SET role_id = ${roleID} WHERE id = ${employeeID}`, (err, res) => {
+                    if (err) return err;
+
+                    console.log(`\n ${answer.employee} ROLE UPDATED TO ${answer.role}...\n `);
+
+                    mainMenu();
+                });
+            });
+    });
 }
 
 
