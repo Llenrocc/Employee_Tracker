@@ -1,12 +1,12 @@
 const mysql = require("mysql");
-const ingquirer = require("inqiurer");
+const inquirer = require("inquirer");
 const consoleTable = require("console.table");
 const promisemysql = require("promise-mysql");
-const inquirer = require("inquirer");
+
 
 const connectionProperties = {
     host: "localhost",
-    port: 3001,
+    port: 3306,
     user: "root",
     password: "118balliol",
     databse: "employees_DB"
