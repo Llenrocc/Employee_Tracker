@@ -35,7 +35,7 @@ This is an easy-to-use node application for any manager/owner to be able to view
 
 ![Sc4](https://user-images.githubusercontent.com/62081345/94761248-8bb54580-0372-11eb-8d19-20e970f45b60.png)
 
-**I used VS Code, Node.js, and MySql workbench for this project. I ran into some errors early on when it came to making promises and queries. Some of these errors still persist. I also had an issue with SQL workbench and VS code, I was having issues in vs code with localhost and connecting to mysql server. When selecting view all employees, none of them appear. But if I choose view employees, by deparment, that is displayed in the command line. There is also an error when I try to add an employee to a department. Promise-sql was used after having problems turning the query into a promise.**
+**I used VS Code, Node.js, and MySql workbench for this project. I ran into some errors early on when it came to making promises and queries. Some of these errors still persist. I also had an issue with SQL workbench and VS code, I was having issues in vs code with localhost and connecting to mysql server. When selecting view all employees, none of them appear. But if I choose view employees, by deparment, that is displayed in the command line. There is also an error when I try to add an employee to a department. I used screenshots instead of gif video because the laptop I used for this project is having some issues and needs a deep diagnostics scan. Promise-sql was used after having problems turning the query into a promise.**
 
 
 
