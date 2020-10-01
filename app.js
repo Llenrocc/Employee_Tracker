@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const consoleTable = require("console.table");
+const cTable = require("console.table");
 const promisemysql = require("promise-mysql");
 
 
@@ -9,7 +9,7 @@ const connectionProperties = {
     port: 3306,
     user: "root",
     password: "118balliol",
-    databse: "employees_DB"
+    database: "employees_DB"
 }
 
 const connection = mysql.createConnection(connectionProperties);
@@ -40,6 +40,7 @@ function mainMenu() {
             "Delete department",
             "Delete employee",
             "Delete role",
+            "View department budets"
         ]
     })
     .then((answer) => {
