@@ -15,3 +15,7 @@ This is an easy-to-use node application for any manager/owner to be able to view
 
 ---
 
+## Usage
+
+
+![Sc1](https://user-images.githubusercontent.com/62081345/94760279-0df03a80-0370-11eb-81f0-668d3cfd5664.png)
